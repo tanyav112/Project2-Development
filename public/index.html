@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+     <link rel="stylesheet" href="./style.css">
+     <title>Christmas Organizer</title>
+</head>
+
+<body>
+     <div class="container">
+          <div class='header'>
+               <h1 id="title">Santa's helper</h1>
+               <div id="greeting">
+                    <h3>Happy Holidays Hope!</h3>
+                    <button id="log-in-btn" onclick="signIn()">Log In</button>
+                    <button id="log-out-btn">Log Out</button>
+               </div>
+          </div>
+          <h1>Welcome to Christmas Organizer!</h1>
+          <h3>Pretend you see a carousel! each piece below a slide</h3>
+          <div class="carousel">
+               <h2>Gifts</h2>
+               <p>Remember the people you need to shop for</p>
+               <button onclick="startList('gifts')">start now</button>
+          </div>
+          <div class="carousel">
+               <h2>Wishes</h2>
+               <p>Make wish lists for the special people</p>
+               <button onclick="startList('wishes')">start now</button>
+          </div>
+          <div class="carousel">
+               <h2>Cards</h2>
+               <p>All the info you need to send your holiday greetings</p>
+               <button onclick="startList('cards')">start now</button>
+          </div>
+          <div class="carousel">
+               <h2>Recipes</h2>
+               <p>Keep your holiday recipes in one place</p>
+               <button onclick="startList('recipes')">start now</button>
+          </div>
+          <div class="carousel">
+               <h2>Groceries</h2>
+               <p>Don't forget the ingredients to make serve up something delicious</p>
+               <button onclick="startList('groceries')">start now</button>
+          </div>
+          <div class="carousel">
+               <h2>Events</h2>
+               <p>Enjoy all the fun and don't forget to wear that ugly sweater</p>
+               <button onclick="startList('events')">start now</button>
+          </div>
+
+          
+
+<!-- Sign up Modal Pop Up -->
+<div id="myModalSignUp" class="modal">
+  <!-- Modal content sign up -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <div class="container-fluid">
+      <div class="row">
+        <!-- form start -->
+        <form id="sign-up-container">
+          <div class="form-group">
+            <label id="sign-up-name1" for="exampleInputname1">Name</label>
+            <input type="text" class="form-control" id="sign-up-name" aria-describedby="nameHelp" placeholder="Name">
+          </div>
+          <div class="form-group">
+            <label id="sign-up-email" for="exampleInputEmail1">Email Address</label>
+            <input type="email" class="form-control" id="email-register" aria-describedby="emailHelp" placeholder="Email">
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          </div>
+          <div class="form-group">
+            <label id="sign-up-password" for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" id="password1-register" placeholder="Password">
+            <small id="emailHelp" class="form-text text-muted">Must be a minimum of 6 characters</small>
+          </div>
+          <div class="form-group">
+            <label id="sign-up-password2" for="exampleInputPassword1">Confirm Password</label>
+            <input type="password" class="form-control" id="password2-register" placeholder="Password">
+            <input type="checkbox" onclick="showPassword()">Show Passwords
+          </div>
+          <button id="submit-register" type="submit" onclick="addUser()" class="btn btn-primary">Register</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Sign up Modal Pop Up -->
+<div id="myModalLogIn" class="modal">
+  <!-- Modal content sign up -->
+  <div class="modal-content">
+    <span class="close2">&times;</span>
+    <div class="container-fluid">
+      <div class="row">
+        <!-- form start -->
+        <form id="login-container">
+          <div class="form-group">
+            <label id="login-email" for="exampleInputEmail1">Email address</label>
+            <input type="email" class="txt-email" id="email-login" aria-describedby="emailHelp" placeholder="Email" required/>
+          </div>
+          <div class="form-group">
+            <label id="password-label" for="exampleInputPassword1">Password</label>
+            <input type="password" class="txt-password" id="password-login" placeholder="Password" />
+            <input type="checkbox" onclick="showPassword2()" />Show Password
+          </div>
+
+          <button id="submit-login" type="submit" class="btn btn-primary">
+            Login
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+     </div>
+
+<script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="./logic.js"></script>
+    <script src="./firebase.js"></script>
+
+    <script> 
+      const addUser = () => {
+        event.preventDefault()
+        fetch('/user', {
+          method: 'POST',
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+          },
+          body: JSON.stringify({
+            userName: document.querySelector('#sign-up-name').value,
+            email: document.querySelector('#email-register').value,
+          })
+        }).then(r => {
+          console.log(r)
+        }).catch(e => console.log(e))
+      }
+       //this code not working to pull user data back to the client
+      // const getUser = () => {
+      //   fetch('/user')
+      //     .then(r => r.json())
+      //     .then(r => {
+      //       localStorage.getItem(r.userId)
+      //     })
+      //     .catch(e => console.log(e))
+      // }
+
+    </script>
+
+</body>
+
+</html>
