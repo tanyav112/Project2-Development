@@ -15,7 +15,7 @@
                <h1 id="title">Santa's helper</h1>
                <div id="greeting">
                     <h3>Happy Holidays Hope!</h3>
-                    <button id="log-in-btn" onclick="signIn()">Log In</button>
+                    <button id="log-in-btn" onclick="signIn(), getUser()">Log In</button>
                     <button id="log-out-btn">Log Out</button>
                </div>
           </div>
@@ -82,7 +82,7 @@
             <input type="password" class="form-control" id="password2-register" placeholder="Password">
             <input type="checkbox" onclick="showPassword()">Show Passwords
           </div>
-          <button id="submit-register" type="submit" onclick="addUser()" class="btn btn-primary">Register</button>
+          <button id="submit-register" type="submit" onclick="addUser(), getUser()" class="btn btn-primary">Register</button>
         </form>
       </div>
     </div>
@@ -108,7 +108,7 @@
             <input type="checkbox" onclick="showPassword2()" />Show Password
           </div>
 
-          <button id="submit-login" type="submit" class="btn btn-primary">
+          <button id="submit-login" type="submit" onclick="getUser()" class="btn btn-primary">
             Login
           </button>
         </form>
@@ -129,6 +129,7 @@
     <script src="./firebase.js"></script>
 
     <script> 
+      //function to add user to the database
       const addUser = () => {
         event.preventDefault()
         fetch('/user', {
@@ -142,18 +143,41 @@
           })
         }).then(r => {
           console.log(r)
+          
         }).catch(e => console.log(e))
       }
-       //this code not working to pull user data back to the client
-      // const getUser = () => {
-      //   fetch('/user')
-      //     .then(r => r.json())
-      //     .then(r => {
-      //       localStorage.getItem(r.userId)
-      //     })
-      //     .catch(e => console.log(e))
+      //this brings user data back to the front end and stores user data to computer local storage    
+       const getUser = () => {
+        fetch('/user')
+          .then(r => r.json())
+          .then(r => {
+            console.log(JSON.stringify(r))
+            window.localStorage.setItem("userId", r[2].id)
+            window.localStorage.setItem("email", r[2].email)
+            window.localStorage.setItem("userName", r[2].userName)
+          })
+          .catch(e => console.log(e))
+      }
+
+
+      let users;
+        if (localStorage.getItem('userId')) {
+          users = JSON.parse(localStorage.getItem('userId'));
+          console.log(users)
+        } else {
+          users= [];
+          
+        }
+      // localStorage.setItem('user', JSON.stringify(userArray));
+      // const data = JSON.parse(localStorage.getItem('user'));
+      // document.addEventListener("click", function()){
+      //   event.preventDefault()
+      //   userArray.push()
+
       // }
 
+      // setTimeout(getUser, 1000)
+      // getUser()
     </script>
 
 </body>

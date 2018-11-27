@@ -285,6 +285,15 @@ module.exports = function (app) {
                     res.json(dbWish);
                });
      });
+
+  // GET route for getting all of the user data
+  app.get("/user/", function (req, res) {
+    db.user.findAll({})
+      .then(function (dbUser) {
+        res.json(dbUser);
+      });
+  });
+     
   // POST route for saving a new user 
   app.post("/user", function (req, res) {
     db.user.create({
